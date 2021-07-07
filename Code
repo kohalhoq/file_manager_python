@@ -1,0 +1,97 @@
+import os
+from tkinter import *
+import tkinter as tk
+import shutil
+from tkinter import filedialog
+
+ 
+
+root = tk.Tk()
+
+
+def open_file():
+    task = filedialog.askopenfilenames(
+    	parent=root,
+    	filetypes=[
+    		("All files", "*")])
+    print(task)
+    try:
+	    os.startfile(task[0])
+    except IndexError:
+        print("No file selected")
+        
+#path=(C:/Users/name of user's computer/location of action eg. desktop, downloads, documents, etc) + file name and format(eg.- .pdf, .jpg, .docx)
+ 
+    
+def copy_button():
+    global source
+    global destination
+    source1 = source.get()
+    destination1 = destination.get()
+    shutil.copy(source1,destination1)
+def copy_file():   
+    global source
+    global destination
+    copy = Tk()
+    Label(copy, text = "Enter path and file name").grid(row = 1, column = 1)
+    Label(copy, text = "Enter path and file name").grid(row = 4, column = 1)
+    source = Entry(copy)
+    source.grid(row = 1, column = 14)
+    destination = Entry(copy)
+    destination.grid(row = 4, column = 14)
+    Button(copy, text = 'Done', command = copy_button).grid(row = 7, column = 2)
+    copy.mainloop()
+
+    
+def delete_button():
+    global deletefile
+    string = deletefile.get()
+    if os.path.exists(string):
+        os.remove(string)             
+    else:
+        print('File not found')
+def delete_file():
+    global deletefile
+    delete = Tk()
+    Label(delete, text = "Enter path and file name").grid(row = 1, column = 1)
+    deletefile = Entry(delete)
+    deletefile.grid(row = 5, column = 1)
+    Button(delete, text = 'Done', command = delete_button).grid(row = 7, column = 1)
+    delete.mainloop()
+
+
+def rename_button():
+    global path1
+    global path2
+    string1 = path1.get()
+    string2 = path2.get()
+    shutil.move(string1,string2)
+def rename_file():
+    global path1
+    global path2
+    rename = Tk()
+    Label(rename, text = "Enter path and file name").grid(row = 1, column = 1)
+    Label(rename, text = "Enter path and file name").grid(row = 4, column = 1)
+    path1 = Entry(rename)
+    path1.grid(row = 1, column = 14)
+    path2 = Entry(rename)
+    path2.grid(row = 4, column = 14)
+    Button(rename, text = 'Done', command = rename_button).grid(row = 7, column = 2)
+    rename.mainloop()
+
+    
+Label(root, bg= 'red', text="Kohal Haque's File Browser").grid(row = 5, column = 2)
+    
+Button(root, bg= 'yellow', text = "Copy files", command = copy_file).grid(row = 19, column = 1)
+
+Button(root, bg= 'light blue', text = "Delete files", command = delete_file).grid(row = 13, column = 1)
+
+Button(root, bg= 'light green', text = "Rename files", command = rename_file).grid(row = 7, column = 13)
+
+Button(root, bg= 'orange', text = "Move files", command = rename_file).grid(row = 13, column =13)
+
+Button(root, bg= 'light pink', text="Open files", command=open_file).grid(row=7, column=1, padx=4, pady=4)
+
+root.configure (bg= 'black')
+
+root.mainloop()
